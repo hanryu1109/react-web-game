@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -20,9 +21,7 @@
         <!-- 웹팩은 쪼개진 자바스크립트 파일을 HTML이 실행할 수 있는 자바스크립트로 합쳐준다  -->
 
     <!-- REACT 불러오는 방법 2. script 태그 안에 직접 작성하기 -->
-    <script>
-        const e = React.createElement;
-
+    <script type="text/babel"> // 바벨이 jsx문법을 React.createElement로 바꿔주는 것...
         class LikeButton extends React.Component {
             constructor(props) {
                 super(props);
@@ -32,17 +31,15 @@
             }
 
             render() {
-                return e('button', 
-                        { onClick: () => { this.setState({ liked: true }) }, type: 'submit' },
-                        this.state.liked === true ? 'Liked' : 'Like'
-                        );
-                // <button onclick="() => { console.log('clicked') }" type="submit">Like</button>
+                return <button type="submit" onClick={() => { this.setState({ liked: true })}}>
+                    { this.state.liked === true ? 'Liked' : 'Like' }
+                </button>;
             }
         }
     </script>
 
-    <script>
-        ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+    <script type="text/babel">
+        ReactDOM.render(<LikeButton />, document.querySelector('#root'))
     </script>
 </body>
 </html>
